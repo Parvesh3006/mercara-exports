@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MERCARA EXPORTS | Premium Global Merchant Exporter</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/MERCARA_EXPORTS_LOGO.png">
+    
+    <!-- SEO Meta -->
+    <meta name="description" content="MERCARA EXPORTS - Global Merchant Exporter & Bulk Supplier of Agro Products, Spices, and Commodities. Division of WILLIAM & ASSOCIATES.">
+    <meta name="keywords" content="Export, Spices, Agro Products, India, Wholesale, B2B, William & Associates">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mercara: {
+                            gold: '#C5A059',
+                            dark: '#0B2822', // Deep British Green
+                            green: '#144138',
+                            beige: '#F5F2EA',
+                            gray: '#E5E5E5'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Inter"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- React & Libraries -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("JmurmcDFINdkUQPEZ");
+        })();
+    </script>
+    
+    <style>
+        /* Hide content until React loads */
+        #root:empty { opacity: 0; }
+        #root { transition: opacity 0.5s ease; opacity: 1; }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 antialiased selection:bg-mercara-gold selection:text-white">
+    
+    <div id="root"></div>
+
+    <!-- Application Scripts (Order Matters) -->
+    <script type="text/babel" src="data.js"></script>
+    <script type="text/babel" src="components.js"></script>
+    <script type="text/babel" src="sections.js"></script>
+    <script type="text/babel" src="app.js"></script>
+
+    <!-- Lucide Icon Init -->
+    <script>
+        window.addEventListener('load', () => {
+            if (window.lucide) window.lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

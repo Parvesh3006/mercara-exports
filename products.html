@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Products | MERCARA EXPORTS - Premium Global Merchant Exporter</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/MERCARA_EXPORTS_LOGO.png">
+    
+    <!-- SEO Meta -->
+    <meta name="description" content="Explore our comprehensive range of agro products including whole spices, dry fruits, millets, pulses, and more. Sourced directly from Indian farms.">
+    <meta name="keywords" content="Export, Spices, Agro Products, India, Wholesale, B2B, Dry Fruits, Millets, Pulses">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mercara: {
+                            gold: '#C5A059',
+                            dark: '#0B2822',
+                            green: '#144138',
+                            beige: '#F5F2EA',
+                            gray: '#E5E5E5'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Inter"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- React & Libraries -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("JmurmcDFINdkUQPEZ");
+        })();
+    </script>
+    
+    <style>
+        #root:empty { opacity: 0; }
+        #root { transition: opacity 0.5s ease; opacity: 1; }
+        .glass-dark {
+            background: rgba(11, 40, 34, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #C5A059; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0B2822; }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 antialiased selection:bg-mercara-gold selection:text-white">
+    
+    <div id="root"></div>
+
+    <!-- Main Application Script -->
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { motion, AnimatePresence } = window.Motion;
+
+        // ==========================================
+        // DATA DEFINITION (Embedded for standalone functionality)
+        // ==========================================
+        
+        const PRODUCTS_DATA = [
+            // --- Whole Spices ---
+            {
+                id: 'cardamom',
+                title: 'Cardamom',
+                category: 'Whole Spices',
+                description: 'Premium quality cardamom sourced from the finest plantations in Kerala and Karnataka. Known for its intense aroma and flavor.',
+                image: 'https://www.allrecipes.com/thmb/k9Lz3cPTurD2mL5gliy7hF54SBY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1134929438-2000-6ed05c6782a74f82b7229fc0de6254ec.jpg',
+                items: ['8mm', '7mm', '6-7mm']
+            },
+            {
+                id: 'chilli',
+                title: 'Chilli',
+                category: 'Whole Spices',
+                description: 'High-grade Indian chillies known for their vibrant color and pungency. Ideal for culinary and industrial use.',
+                image: 'https://static.vecteezy.com/system/resources/thumbnails/002/686/890/small_2x/ripe-red-and-green-chilli-on-a-tree-green-chilies-grows-in-the-garden-free-photo.jpg',
+                items: ['Guntur Chilli', 'Byadgi Chilli', 'Teja Chilli']
+            },
+            {
+                id: 'black-pepper',
+                title: 'Black Pepper',
+                category: 'Whole Spices',
+                description: 'The "King of Spices", sourced from the Malabar Coast. High piperine content and bold size.',
+                image: 'https://img.onmanorama.com/content/dam/mm/en/food/diet-and-nutrition/images/2020/6/25/black-pepper.jpg',
+                items: ['Tellicherry', 'Malabar']
+            },
+            {
+                id: 'clove',
+                title: 'Clove',
+                category: 'Whole Spices',
+                description: 'Aromatic flower buds used in spices and medicine. Sourced directly from certified growers.',
+                image: 'https://fuchsna.com/wp-content/uploads/2025/05/AdobeStock_177138278-1536x1024.jpeg',
+                items: ['Hand Picked', 'Grade A']
+            },
+            {
+                id: 'nutmeg',
+                title: 'Nutmeg',
+                category: 'Whole Spices',
+                description: 'High oil content nutmeg seeds used in culinary dishes and essential oil extraction.',
+                image: 'https://www.chowhound.com/img/gallery/the-definitive-guide-to-nutmeg/what-is-nutmeg-1720101791.webp',
+                items: ['With Shell', 'Without Shell']
+            },
+            {
+                id: 'mace',
+                title: 'Mace',
+                category: 'Whole Spices',
+                description: 'The lacy covering of the nutmeg seed, offering a delicate flavor profile distinct from nutmeg.',
+                image: 'https://www.allrecipes.com/thmb/UdOAouCSE0LN4m-wqXFgNS_2ZaQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/What-Is-Mace-4x3-bcaa6556f9864cc29b48af725ddc5ffd.jpg',
+                items: ['Whole Dried', 'Broken']
+            },
+
+            // --- Whole Spices ---
+            {
+                id: 'turmeric',
+                title: 'Turmeric',
+                category: 'Whole Spices',
+                description: 'High curcumin content turmeric, the golden spice of India, essential for food and medicinal use.',
+                image: 'https://thefitfork.com/wp-content/uploads/2015/08/tumeric-photo.jpg',
+                items: ['Turmeric Finger', 'Turmeric Powder']
+            },
+
+            // --- Dry Fruits & Nuts ---
+            {
+                id: 'cashew-nuts',
+                title: 'Cashew Nuts',
+                category: 'Dry Fruits & Nuts',
+                description: 'Premium grade cashew nuts (W180, W240, W320) known for their crunch and taste.',
+                image: 'https://ruchasdryfruits.com/wp-content/uploads/2023/05/raw-cashews-nuts-bag-dark-background-scaled.jpg',
+                items: ['W180', 'W240', 'W320', 'W450']
+            },
+            {
+                id: 'groundnuts-peanuts',
+                title: 'Groundnuts / Peanuts',
+                category: 'Dry Fruits & Nuts',
+                description: 'Nutritious and high-quality peanuts suitable for snacking, oil extraction, and food products.',
+                image: 'https://cdn.wikifarmer.com/wp-content/uploads/2023/07/Groundnut-Plant-Information-History-Uses-and-Nutrition-Value.jpg',
+                items: ['Bold Type', 'Java Type', 'Raw Kernels']
+            },
+            {
+                id: 'areca-nut',
+                title: 'Areca Nut (Betel Nut)',
+                category: 'Dry Fruits & Nuts',
+                description: 'Dried areca nuts sourced from Karnataka and Kerala, processed for quality assurance.',
+                image: 'https://acfsorganic.com/wp-content/uploads/2017/07/27628649-Ripe-and-Raw-Betel-Nut-Or-Areca-Nut-Palm-On-Tree-Stock-Photo.jpg',
+                items: ['Whole Dried', 'Split', 'Cut']
+            },
+
+            // --- Seeds & Oilseeds ---
+            {
+                id: 'sesame-seeds',
+                title: 'Sesame Seeds',
+                category: 'Seeds & Oilseeds',
+                description: 'High purity sesame seeds, naturally processed, ideal for bakery and oil extraction.',
+                image: 'https://th.bing.com/th/id/R.f8957fadf305189a121a13b5f3de75fe?rik=s0FDbtR1u2bEOw&riu=http%3a%2f%2fwww.maangchi.com%2fwp-content%2fuploads%2f2014%2f09%2ftoasted-sesame-seeds.jpg&ehk=tTrijdqVdCHgHsngizarHgRdVn295YWcIDjLyrMcuw8%3d&risl=&pid=ImgRaw&r=0',
+                items: ['White', 'Black', 'Natural']
+            },
+
+            // --- Edible Oils ---
+            {
+                id: 'coconut-oil',
+                title: 'Coconut Oil',
+                category: 'Edible Oils',
+                description: 'Cold-pressed virgin coconut oil from Pollachi coconuts, retaining natural aroma and nutrients.',
+                image: 'https://www.healthbenefitstimes.com/9/gallery/coconut-oil/Coconut-oil-1.jpg',
+                items: ['Cold Pressed', 'Virgin']
+            },
+
+            // --- Cereals & Millets ---
+            {
+                id: 'ragi',
+                title: 'Ragi (Finger Millet)',
+                category: 'Cereals & Millets',
+                description: 'Ragi is a nutritious ancient grain rich in calcium and iron. Naturally gluten-free, high in fiber.',
+                image: 'https://organicmandya.com/cdn/shop/files/Fingermillet_Ragi.jpg?v=1719903862&width=1066',
+                items: ['Whole', 'Ground']
+            },
+            {
+                id: 'foxtail-millet',
+                title: 'Foxtail Millet',
+                category: 'Cereals & Millets',
+                description: 'Foxtail millet is a highly nutritious grain, high in protein and fiber. Naturally gluten-free.',
+                image: 'https://vibrantliving.in/cdn/shop/files/FoxtailMillet.png?v=1731059360&width=1000',
+                items: ['Whole', 'Ground']
+            },
+            {
+                id: 'pearl-millet',
+                title: 'Pearl Millet (Bajra)',
+                category: 'Cereals & Millets',
+                description: 'Pearl millet (Bajra) is excellent for diabetic-friendly diets. Naturally gluten-free and rich in fiber.',
+                image: 'https://justorganik.com/wp-content/uploads/2024/04/bajra.png',
+                items: ['Whole', 'Ground']
+            },
+            {
+                id: 'little-millet',
+                title: 'Little Millet',
+                category: 'Cereals & Millets',
+                description: 'Little millet is quick cooking and easy to digest. Naturally gluten-free and rich in fiber.',
+                image: 'https://naturallyyours.in/cdn/shop/articles/little_millet.jpg?v=1651737375',
+                items: ['Whole', 'Ground']
+            },
+
+            // --- Pulses & Legumes ---
+            {
+                id: 'chickpeas',
+                title: 'Chickpeas',
+                category: 'Pulses & Legumes',
+                description: 'Protein-rich pulses including the famous Kabuli chana, sourced from Central India.',
+                image: 'https://s.hdnux.com/photos/01/32/44/17/23741421/3/rawImage.jpg',
+                items: ['Kabuli (7-8mm)', 'Kabuli (8-9mm)', 'Kabuli (9mm+)', 'Desi']
+            },
+            {
+                id: 'pulses',
+                title: 'Pulses',
+                category: 'Pulses & Legumes',
+                description: 'Staple lentils and pulses of superior quality, uniform size and quick cooking time.',
+                image: 'https://the-rainbow-diet.com/wp-content/uploads/2018/11/8CC7CF7D-D92A-48AD-BA80-A32E1C57BA98.jpeg',
+                items: ['Moong (Green Gram)', 'Masoor (Red Lentil)', 'Toor (Pigeon Pea)']
+            },
+
+            // --- Fresh Agro Produce ---
+            {
+                id: 'onion',
+                title: 'Onion',
+                category: 'Fresh Agro Produce',
+                description: 'Export quality red onions from Nasik, known for their pungency and long shelf life.',
+                image: 'https://cdn11.bigcommerce.com/s-a9b4a/images/stencil/1280x1280/products/2743/7573/Ruby-Red-Onion__50708.1669754549.jpg?c=2',
+                items: ['From Nasik (Red)', 'Small Onion']
+            },
+            {
+                id: 'coconut',
+                title: 'Coconut',
+                category: 'Fresh Agro Produce',
+                description: 'Fresh mature coconuts from Pollachi, rich in water and meat content.',
+                image: 'https://media.istockphoto.com/photos/coconut-on-wooden-table-picture-id510846312?k=6&m=510846312&s=170667a&w=0&h=DDbH0mJAbQahRoVhfFqbvP0YzUX8e_irzsEDUrEFd1A=',
+                items: ['From Pollachi', 'Semi-Husked', 'Fully Husked']
+            },
+
+            // --- Natural Sweeteners & Condiments ---
+            {
+                id: 'honey',
+                title: 'Honey',
+                category: 'Natural Sweeteners & Condiments',
+                description: 'Pure and natural honey harvested from organic flora zones.',
+                image: 'https://cdn.pixabay.com/photo/2017/01/06/17/49/honey-1958464_1280.jpg',
+                items: ['Raw Honey', 'Monofloral Honey']
+            },
+            {
+                id: 'jaggery',
+                title: 'Jaggery',
+                category: 'Natural Sweeteners & Condiments',
+                description: 'Traditional unrefined sugar made from sugarcane juice, chemical-free.',
+                image: 'https://images.slurrp.com/prodarticles/o1k16ptwfip.webp',
+                items: ['Block', 'Powder']
+            },
+            {
+                id: 'tamarind',
+                title: 'Tamarind',
+                category: 'Natural Sweeteners & Condiments',
+                description: 'Souring agent used widely in cuisines. Processed for seed-free options.',
+                image: 'https://i.pinimg.com/originals/34/27/c4/3427c45a25ff3a27662215c78970f511.jpg',
+                items: ['Whole with Seed', 'Deseeded', 'Block/Slab']
+            },
+
+            // --- Herbal / Functional Agro Products ---
+            {
+                id: 'moringa-powder',
+                title: 'Moringa Powder',
+                category: 'Herbal / Functional Agro Products',
+                description: 'Nutrient-dense superfood powder made from dried moringa leaves.',
+                image: 'https://cdn11.bigcommerce.com/s-kwixp0is6j/product_images/uploaded_images/moringa.jpg',
+                items: ['Organic Moringa Powder', 'Leaf Powder']
+            },
+            {
+                id: 'psyllium-husk',
+                title: 'Psyllium Husk (Ispaghula)',
+                category: 'Herbal / Functional Agro Products',
+                description: 'Natural dietary fiber used in pharmaceuticals and health foods.',
+                image: 'https://img.freepik.com/free-photo/close-up-psyllium-ispaghula-husk-wooden-spoonpsyllium-husk-also-called-isabgol-is-fiber-der_483511-1931.jpg?size=626&ext=jpg',
+                items: ['98% Purity Grade', '99% Purity Grade']
+            }
+        ];
+
+        const CATEGORIES = [
+            { id: 'all', name: 'All Products' },
+            { id: 'Whole Spices', name: 'Whole Spices' },
+            { id: 'Ground Spices & Herbal Products', name: 'Ground Spices & Herbal Products' },
+            { id: 'Dry Fruits & Nuts', name: 'Dry Fruits & Nuts' },
+            { id: 'Seeds & Oilseeds', name: 'Seeds & Oilseeds' },
+            { id: 'Edible Oils', name: 'Edible Oils' },
+            { id: 'Cereals & Millets', name: 'Cereals & Millets' },
+            { id: 'Pulses & Legumes', name: 'Pulses & Legumes' },
+            { id: 'Fresh Agro Produce', name: 'Fresh Agro Produce' },
+            { id: 'Natural Sweeteners & Condiments', name: 'Natural Sweeteners & Condiments' },
+            { id: 'Herbal / Functional Agro Products', name: 'Herbal / Functional Agro Products' }
+        ];
+
+        // ==========================================
+        // COMPONENTS
+        // ==========================================
+
+        // Icon Helper
+        const Icon = ({ name, size = 24, className = "" }) => {
+            useEffect(() => {
+                if (window.lucide) window.lucide.createIcons();
+            });
+            return <i data-lucide={name} width={size} height={size} className={className}></i>;
+        };
+
+        // Navbar
+        const Navbar = () => {
+            const [scrolled, setScrolled] = useState(false);
+
+            useEffect(() => {
+                const handleScroll = () => setScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const navLinks = [
+                { name: "Home", href: "index.html" },
+                { name: "About", href: "index.html#about" },
+                { name: "Products", href: "products.html" },
+                { name: "Process", href: "index.html#process" },
+                { name: "Contact", href: "index.html#contact" },
+            ];
+
+            return (
+                <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'glass-dark py-4 shadow-xl' : 'bg-mercara-dark py-6'}`}>
+                    <div className="container mx-auto px-6 flex justify-between items-center">
+                        {/* Logo - Replace 'logo.png' with your actual logo file */}
+                        <div className="flex items-center gap-3">
+                            <img src="images/logo.png" alt="MERCARA Exports Logo" className="h-12 w-auto" />
+                            <div className="flex flex-col">
+                                <a href="index.html" className="font-serif text-2xl md:text-3xl font-bold tracking-tight text-white">
+                                    MERCARA <span className="text-mercara-gold">EXPORTS</span>
+                                </a>
+                                <span className="text-[0.6rem] text-gray-400 tracking-widest uppercase hidden md:block">Division of William & Associates</span>
+                            </div>
+                        </div>
+                        <div className="hidden md:flex items-center space-x-8">
+                            {navLinks.map((link) => (
+                                <a 
+                                    key={link.name} 
+                                    href={link.href} 
+                                    className={`text-sm font-medium tracking-wide hover:text-mercara-gold transition-colors ${scrolled ? 'text-gray-200' : 'text-white'}`}
+                                >
+                                    {link.name}
+                                </a>
+                            ))}
+                            <a href="index.html#contact" className="px-6 py-2 bg-mercara-gold text-white text-xs font-medium tracking-wide uppercase hover:bg-white hover:text-mercara-dark border border-mercara-gold transition-all duration-300">
+                                Get Quote
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+            );
+        };
+
+        // Product Card
+        const ProductCard = ({ product, index }) => (
+            <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
+                className="bg-white shadow-lg overflow-hidden group border border-gray-100 hover:border-mercara-gold transition-colors duration-300"
+            >
+                <div className="h-56 overflow-hidden relative bg-stone-100">
+                    <img 
+                        src={product.image} 
+                        alt={product.title} 
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    
+                    <div className="absolute top-4 left-4 bg-mercara-gold text-white px-3 py-1 text-xs font-bold uppercase tracking-wider">
+                        {product.category}
+                    </div>
+                </div>
+                <div className="p-6">
+                    <h3 className="font-serif text-2xl text-mercara-dark font-bold mb-2">{product.title}</h3>
+                    <p className="text-gray-500 text-sm mb-6 leading-relaxed line-clamp-2">{product.description}</p>
+                    
+                    {/* Types/Varieties List */}
+                    <div className="border-t border-gray-100 pt-4">
+                        <h4 className="text-xs font-bold uppercase text-mercara-gold tracking-wider mb-3">Available Varieties:</h4>
+                        <div className="flex flex-wrap gap-2">
+                            {product.items.map(item => (
+                                <span key={item} className="text-xs bg-stone-100 text-stone-700 px-3 py-1.5 rounded-sm border border-stone-200 font-medium">
+                                    {item}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+        );
+
+        // Main Page Component
+        const ProductsPage = () => {
+            const [selectedCategory, setSelectedCategory] = useState("all");
+
+            const filteredProducts = selectedCategory === "all" 
+                ? PRODUCTS_DATA 
+                : PRODUCTS_DATA.filter(p => p.category === selectedCategory);
+
+            return (
+                <React.Fragment>
+                    <Navbar />
+                    
+                    {/* Hero Section */}
+                    <section className="pt-32 pb-16 bg-mercara-dark relative overflow-hidden">
+                        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'url(https://source.unsplash.com/1600x900/?spices-market)', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+                        <div className="container mx-auto px-6 relative z-10">
+                            <div className="text-center max-w-3xl mx-auto">
+                                <span className="text-mercara-gold font-bold tracking-[0.2em] text-xs uppercase mb-4 block">
+                                    Premium Quality
+                                </span>
+                                <h1 className="font-serif text-4xl md:text-6xl text-white mb-6">
+                                    Our Product Portfolio
+                                </h1>
+                                <p className="text-gray-300 text-lg leading-relaxed">
+                                    Explore our comprehensive range of premium agro commodities. 
+                                    From farm-fresh produce to processed goods, we deliver authenticity and quality to global markets.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Filter Section */}
+                    <section className="py-8 bg-white border-b border-gray-100 sticky top-[72px] md:top-[80px] z-40 shadow-sm">
+                        <div className="container mx-auto px-6">
+                            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                                <div className="flex items-center gap-3">
+                                    <Icon name="Filter" className="text-mercara-gold" size={20} />
+                                    <span className="text-sm font-medium text-gray-600">Filter by Category:</span>
+                                </div>
+                                <div className="w-full md:w-auto">
+                                    <select 
+                                        value={selectedCategory}
+                                        onChange={(e) => setSelectedCategory(e.target.value)}
+                                        className="w-full md:w-96 px-4 py-3 border border-gray-200 bg-stone-50 text-mercara-dark font-medium focus:outline-none focus:border-mercara-gold transition-colors cursor-pointer appearance-none"
+                                        style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23C5A059'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1.5rem' }}
+                                    >
+                                        {CATEGORIES.map(cat => (
+                                            <option key={cat.id} value={cat.id}>{cat.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Products Grid */}
+                    <section className="py-16 bg-stone-50">
+                        <div className="container mx-auto px-6">
+                            <AnimatePresence mode="wait">
+                                <motion.div 
+                                    key={selectedCategory}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    {/* Results Count */}
+                                    <div className="mb-8 text-center">
+                                        <p className="text-gray-500 text-sm">
+                                            Showing <span className="font-bold text-mercara-dark">{filteredProducts.length}</span> products
+                                            {selectedCategory !== 'all' && <span> in <span className="font-bold text-mercara-gold">{selectedCategory}</span></span>}
+                                        </p>
+                                    </div>
+
+                                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                        {filteredProducts.map((product, index) => (
+                                            <ProductCard key={product.id} product={product} index={index} />
+                                        ))}
+                                    </div>
+
+                                    {/* Empty State */}
+                                    {filteredProducts.length === 0 && (
+                                        <div className="text-center py-16">
+                                            <Icon name="PackageX" size={48} className="mx-auto text-gray-300 mb-4" />
+                                            <h3 className="font-serif text-2xl text-mercara-dark mb-2">No Products Found</h3>
+                                            <p className="text-gray-500">Try selecting a different category.</p>
+                                        </div>
+                                    )}
+                                </motion.div>
+                            </AnimatePresence>
+                        </div>
+                    </section>
+
+                    {/* CTA Section */}
+                    <section className="py-16 bg-mercara-dark">
+                        <div className="container mx-auto px-6 text-center">
+                            <h2 className="font-serif text-3xl md:text-4xl text-white mb-6">Ready to Source Your Products?</h2>
+                            <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+                                Contact us for bulk quotations, samples, or any inquiries about our product range. 
+                                Our team will respond within 24 hours.
+                            </p>
+                            <a href="index.html#contact" className="inline-flex items-center gap-2 px-8 py-4 bg-mercara-gold text-white font-medium tracking-wide uppercase hover:bg-white hover:text-mercara-dark border border-mercara-gold transition-all duration-300">
+                                Request Quote
+                                <Icon name="ArrowRight" size={18} />
+                            </a>
+                        </div>
+                    </section>
+
+                    {/* Footer */}
+                    <footer className="bg-mercara-dark text-white pt-16 pb-8 border-t border-mercara-gold/20">
+                        <div className="container mx-auto px-6">
+                            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+                                <div className="flex flex-col">
+                                    <span className="font-serif text-xl font-bold">MERCARA <span className="text-mercara-gold">EXPORTS</span></span>
+                                    <span className="text-[0.6rem] text-gray-400 tracking-widest uppercase">Division of William & Associates</span>
+                                </div>
+                                <div className="flex gap-6 text-sm text-gray-400">
+                                    <a href="index.html" className="hover:text-mercara-gold transition-colors">Home</a>
+                                    <a href="products.html" className="hover:text-mercara-gold transition-colors">Products</a>
+                                    <a href="index.html#contact" className="hover:text-mercara-gold transition-colors">Contact</a>
+                                </div>
+                                <div className="text-xs text-gray-500">
+                                    &copy; {new Date().getFullYear()} William & Associates. All Rights Reserved.
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </React.Fragment>
+            );
+        };
+
+        // Render Application
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<ProductsPage />);
+    </script>
+
+    <!-- Lucide Icon Init -->
+    <script>
+        window.addEventListener('load', () => {
+            if (window.lucide) window.lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
